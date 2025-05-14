@@ -64,29 +64,43 @@ public class GameManager : MonoBehaviour
 
     private void OnRoundEnd(int round)
     {
-        
+        //TODO: AudioManager.Instance.PlayOneShot("", boxingRingCenter);
+        // Ring 3x Bell here.
     }
 
     private void OnRoundStart(int round)
     {
-       
+       //TODO: AudioManager.Instance.PlayOneShot("", boxingRingCenter);
+       // Ring the bell here.
     }
 
     private IEnumerator StartGameRoutine()
     {
+        // Match starts from here:
+
         if (enemyController != null)
         {
             Destroy(enemyController.gameObject);
         }
+
         enemyController = Instantiate(enemyControllers[EnemyIndex]);
         yield return new WaitForEndOfFrame();
 
+        
         PlayerScore = 0;
         EnemyScore = 0;
+
         playerScoreTxt.text = "0";
         enemyScoreTxt.text = "0";
+        
+
+        // Resetting round to 0
         currentRound = 0;
+
+        // TODO: This is bad. Cache it.
         XROrigin.GetComponent<CharacterController>().enabled = true;
+
+        // Round logic starts from here.
         while (currentRound < m_MaxRounds)
         {
             OnRoundStarted?.Invoke(currentRound);
@@ -120,7 +134,6 @@ public class GameManager : MonoBehaviour
 
     private void ResetCharacters()
     {
-
         XROrigin.GetComponent<CharacterController>().enabled = false;
         XROrigin.transform.position = playerSpawn.position;
         XROrigin.transform.forward = playerSpawn.forward;

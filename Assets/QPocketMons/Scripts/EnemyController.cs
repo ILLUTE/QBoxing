@@ -304,7 +304,7 @@ public class EnemyController : MonoBehaviour
         ragDollRigidbody.ForEach(r => { r.useGravity = false;});
         m_Animator.enabled = true;
         m_ShouldAttackPlayer = true;
-        m_Target = FindObjectOfType<Player>().transform;
+        m_Target = FindFirstObjectByType<Player>().transform;
     }
 }
 
