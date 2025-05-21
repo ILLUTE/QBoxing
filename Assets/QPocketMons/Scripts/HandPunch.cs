@@ -25,10 +25,19 @@ public class HandPunch : MonoBehaviour
     public Handed hand;
 
     public Image heartFill;
+
+    private string[] punchSFX = new[] { "Punch1", "Punch2", "Punch3", "Punch4", "Punch5", "Punch6" };
     // Start is called before the first frame update
     void Start()
     {
         lastPosition = transform.position;
+    }
+
+    private string GetRandomPunchAudio()
+    {
+        int x = Random.Range(0, punchSFX.Length - 1);
+
+        return punchSFX[x];
     }
 
     // Update is called once per frame
@@ -56,7 +65,7 @@ public class HandPunch : MonoBehaviour
                     if (hit.CallForHit())
                     {
                         PlayHit(transform.position);
-                        AudioManager.Instance.PlayOneShot("PunchFX", transform.position);
+                        AudioManager.Instance.PlayOneShot(GetRandomPunchAudio(), transform.position);
                     }
                     else
                     {

@@ -60,6 +60,8 @@ public class EnemyController : MonoBehaviour
     private int numberOfAttacksReceived;
     public bool m_ShouldAttackPlayer;
 
+    public bool IsReadyToAttack = false;
+
     private Dictionary<string, string[]> Combos = new()
     {
         { "Combo_1",new string[] { "Boxing_Left_Hook", "Boxing_Right_Hook" } },
@@ -160,7 +162,7 @@ public class EnemyController : MonoBehaviour
     {
         if (IsUnableToProcess || health.IsDead) return;
         if (m_Target == null) return;
-
+        if (!IsReadyToAttack) return; // Added this so that we can add a delay before match start
         IsRotating = false;
         RotateTowards(m_Target);
         facialExpressionAnimator.SetExpression(ExpressionKey.Angry, 1);
@@ -305,6 +307,7 @@ public class EnemyController : MonoBehaviour
         m_Animator.enabled = true;
         m_ShouldAttackPlayer = true;
         m_Target = FindFirstObjectByType<Player>().transform;
+        IsReadyToAttack = false;
     }
 }
 

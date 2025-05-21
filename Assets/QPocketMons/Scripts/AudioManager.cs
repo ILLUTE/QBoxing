@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-   private static AudioManager instance;
+    private static AudioManager instance;
     public static AudioManager Instance
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = FindAnyObjectByType<AudioManager>();
 
-                if(instance == null )
+                if (instance == null)
                 {
                     GameObject go = new("AudioManager");
                     instance = go.AddComponent<AudioManager>();
                 }
             }
 
-            return instance;    
+            return instance;
         }
     }
 
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayOneShot(string clipName,Vector3 position)
+    public void PlayOneShot(string clipName, Vector3 position)
     {
         GameObject go = new($"{clipName} SFX");
         AudioSource source = go.AddComponent<AudioSource>();

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public Transform playerSpawn;
 
     [Header("UI References")]
+    [SerializeField] private Canvas RoundStartCanvas;
     [SerializeField] private TextMeshProUGUI roundTimerTxt;
     [SerializeField] private TextMeshProUGUI playerScoreTxt;
     [SerializeField] private TextMeshProUGUI enemyScoreTxt;
@@ -66,12 +67,16 @@ public class GameManager : MonoBehaviour
     {
         //TODO: AudioManager.Instance.PlayOneShot("", boxingRingCenter);
         // Ring 3x Bell here.
+
+        AudioManager.Instance.PlayOneShot("Box_End", player.transform.position);
     }
 
     private void OnRoundStart(int round)
     {
-       //TODO: AudioManager.Instance.PlayOneShot("", boxingRingCenter);
-       // Ring the bell here.
+        //TODO: AudioManager.Instance.PlayOneShot("", boxingRingCenter);
+        // Ring the bell here.
+
+        AudioManager.Instance.PlayOneShot("Box_Begin", player.transform.position);
     }
 
     private IEnumerator StartGameRoutine()
@@ -108,6 +113,16 @@ public class GameManager : MonoBehaviour
 
             ResetCharacters();
 
+            RoundStartCanvas.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(1.5f);
+
+            RoundStartCanvas.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(0.5f);
+
+            enemyController.IsReadyToAttack = true;
+            // This is the only game loop. Checking if timer ran out or if someone died, if not keep continuing..
             while (currentSecondsRemaining > 0 && !IsAnyOneDead())
             {
                 currentSecondsRemaining -= Time.deltaTime;

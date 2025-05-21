@@ -32,6 +32,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private readonly string[] hurtSFX = new[] { "Hurt1", "Hurt2", "Hurt3", "Hurt4", "Hurt5", "Hurt6", "Hurt7", "Hurt8", "Hurt9", "Hurt10" };
+
+    private string GetRandomHurtSFX()
+    {
+        int x = UnityEngine.Random.Range(0, hurtSFX.Length - 1);
+
+        return hurtSFX[x];
+    }
+
     private void Start()
     {
         health.OnHealthUpdate.AddListener(UpdateHealth);
@@ -60,7 +69,7 @@ public class Player : MonoBehaviour
     {
         if (IsPlayerBlocking) return;
         health.SetDamage(damage);
-
+        AudioManager.Instance.PlayOneShot(GetRandomHurtSFX(), transform.position);
         cameraOffset.ShakeCamera();
     }
 
